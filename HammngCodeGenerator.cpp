@@ -33,7 +33,7 @@ void genHammingCode(int siz){
    /*Generating hamming code */
 
    for(int i=1;i<=dataSize;i++){
-    if( (i & (i-1)) ){
+    if( (i & (i-1)) ){  // given number is not power of two
         arr[i] = bits.front();
         bits.pop();
     }
