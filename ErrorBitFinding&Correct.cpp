@@ -15,6 +15,7 @@ int main(){
     for(int i=1;i<=sizee;i++){
         cin>>userBit[i];
     }
+    
     stack<int>bitNoError;
 
     int pBit = 3;
@@ -60,7 +61,31 @@ int main(){
       }
       bitNoError.pop();
     }
-   cout<<"\nError Bit is : "<<ans;
+   
+   
+   if(ans){
+       cout<<"\nError Bit is : "<<ans<<endl;
+       cout<<"Errorless hamming code : \n";
+   for(int i=1;i<=sizee;i++){
+       
+       if(i==ans){
+           if(userBit[i]==1){
+               cout<<0<<" ";
+           }else{
+               cout<<1<<" "; 
+           }
+       }
+       else{
+        cout<<userBit[i]<<" ";  
+       }
+      
+   }cout<<endl;
 
+   }
+   else{
+       cout<<"\nNo Error in Data."<<endl;
+   }
+   
+   
     return 0;
 }
