@@ -2,13 +2,12 @@
 
 using namespace std;
 
+int p=0;
+
 vector<int> genHammingCode(int siz){
 
-    /* Input data bits from the user */
-   
-   
-   int p=0;
-    /* Finding parity bits */
+    /* Input data bits from the user */   
+    /* Finding parity bits -> using bit manipulation*/
    for(int i=0;i<siz;i++){
         int num = (1<<i);
         if(num>=(i+1+siz)){
@@ -21,8 +20,6 @@ vector<int> genHammingCode(int siz){
 //    cout<<"\nData size is : "<<dataSize<<endl;
    
     int arr[dataSize];
- 
-
     /* Storing bits in queue */
    queue<int>bits;
    cout<<"Enter bit by bits : ";
@@ -30,7 +27,6 @@ vector<int> genHammingCode(int siz){
     int bit;cin>>bit;
     bits.push(bit);
    }
-
    /*Generating hamming code */
 
    for(int i=1;i<=dataSize;i++){
@@ -43,9 +39,7 @@ vector<int> genHammingCode(int siz){
     }
    }
 
-
    /* Inserting Parity Bit */
-
     int pBit = 1;
     while(pBit<=p){
         vector<int>v;
@@ -53,23 +47,17 @@ vector<int> genHammingCode(int siz){
         for(int i=1;i<=dataSize;i++){
 
             if( (i & (1<<(d))) != 0){  // pBit th set asel tar stack madhye tak
-                v.push_back(arr[i]);
+                v.push_back(arr[i]); 
             }
 
         }
         int one_cnt = count(v.begin(),v.end(),1);
-        // int zero_cnt = count(v.begin(),v.end(),0);
-
-        // cout<<"One count for "<<pBit<<"is "<<one_cnt<<endl;
-
         if(one_cnt % 2 != 0){
-           int num = (1<<d);
-        arr[num] = 1;  // even parity ke liye change
+            int num = (1<<d);
+            arr[num] = 1;  // even parity ke liye change
         }
         pBit++;
     }
-
-
 //    Printing Hamming Code 
 cout<<"\nSender Data : "<<endl;
   for(int i=1;i<=dataSize;i++){
@@ -77,7 +65,6 @@ cout<<"\nSender Data : "<<endl;
     cout<<arr[i]<<" ";
    }
    cout<<endl;  
-
 
    /* Receiver Side */ 
 
@@ -94,15 +81,12 @@ cout<<"\nSender Data : "<<endl;
         }
    }
 cout<<"\nReceiver Data : "<<endl;
-  for(int i=1;i<=dataSize;i++){
-    
+  for(int i=1;i<=dataSize;i++){    
     cout<<arr[i]<<" ";
    }
    cout<<endl;  
-
     vector<int>bitss;
-    for(int i=1;i<=dataSize;i++){
-    
+    for(int i=1;i<=dataSize;i++){    
     int d = arr[i];
     bitss.push_back(d);
    }
@@ -112,9 +96,6 @@ cout<<"\nReceiver Data : "<<endl;
 void checkErroBit(vector<int>&bitss){
 
     int DataBit = bitss.size();
-
-    // cout<<"\n\nHow many bits do you want to enter ?  : ";
-    // cin>>DataBit;
     
     int sizee = DataBit;
     int userBit[sizee];
@@ -124,7 +105,8 @@ void checkErroBit(vector<int>&bitss){
     
     stack<int>bitNoError;
 
-    int pBit = 3;
+    int pBit = p;
+
         // int pBit = 1;
     while(pBit>=1){
         vector<int>v;
@@ -137,10 +119,7 @@ void checkErroBit(vector<int>&bitss){
             }
 
         }
-        int one_cnt = count(v.begin(),v.end(),1);
-    
-
-        // cout<<"One count for "<<pBit<<"is "<<one_cnt<<endl;
+        int one_cnt = count(v.begin(),v.end(),1);   
 
         if(one_cnt % 2 != 0){
            int num = (1<<d);
@@ -152,7 +131,6 @@ void checkErroBit(vector<int>&bitss){
         }
         pBit--;
     }
-
     /* Calculating error bit  number */
     int ans = 0;
     int i =0;
@@ -166,9 +144,7 @@ void checkErroBit(vector<int>&bitss){
         i++;
       }
       bitNoError.pop();
-    }
-   
-   
+    }     
    if(ans){
        cout<<"\nError Bit is : "<<ans<<endl;
        cout<<"\nCorrect Data : ";
@@ -187,14 +163,11 @@ void checkErroBit(vector<int>&bitss){
        }
       
    }cout<<endl;
-
    }
    else{
-       cout<<"\nNo Error in Data. Successfully Correct Data Received."<<endl;
+       cout<<"\nNo Error in Data. Successfully Accurate Data Received."<<endl;
    }
    cout<<endl;
-   
-
 }
 
 int main(){
@@ -204,5 +177,4 @@ int main(){
     vector<int>bits=genHammingCode(siz);   
 
     checkErroBit(bits);
-
 }
